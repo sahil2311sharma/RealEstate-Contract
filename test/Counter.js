@@ -47,10 +47,12 @@ describe('Counter', () => {
         })
         
         it('decrements the count', async () => {
+            let count = await counter.count()
             transaction = await counter.decrement()
             await transaction.wait()
 
-            expect(await counter.count()).to.equal(0)
+            count = await counter.count()
+            await expect(counter.decrement()).to.be.reverted
         })
 
         it('reads the name from the "name" public variable', async () => {
